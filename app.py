@@ -16,8 +16,8 @@ def get_my_ip():
 
 def get_weather():
     url = "http://ip-api.com/json/"
-#    ip = get_my_ip()
-    ip = "2601:602:9804:4396:9523:5bb6:a710:35da"
+    ip = get_my_ip()
+#    ip = "2601:602:9804:4396:9523:5bb6:a710:35da"
     #print url+ip
     r = requests.get(url+ip)
     json_string = json.dumps(r.json())
