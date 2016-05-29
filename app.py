@@ -11,18 +11,17 @@ app = Flask(__name__)
 api_key = "8ac8a9f185a7384bdeae01ec9fadee8f"
 
 #get weather
-def get_my_ip():
-    return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 def get_weather():
     url = "http://ip-api.com/json/"
-    ip = get_my_ip()
+    ip = request.remote_addr
 #    ip = "2601:602:9804:4396:9523:5bb6:a710:35da"
-    #print url+ip
+    print url+ip
+#    print request.remote_addr
+
     r = requests.get(url+ip)
     json_string = json.dumps(r.json())
     json_obj = json.loads(json_string)
-    print(json_obj['lat'])
     forecast = forecastio.load_forecast(api_key, json_obj['lat'], json_obj['lon'])
     current = forecast.currently()
     if "Rain" not in current.summary:
