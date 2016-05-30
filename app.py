@@ -3,6 +3,7 @@ import os
 import forecastio
 import requests
 import json
+import emoji
 
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
@@ -14,31 +15,26 @@ api_key = "8ac8a9f185a7384bdeae01ec9fadee8f"
 
 def get_weather():
     url = "http://ip-api.com/json/"
-#    ip = request.remote_addr
-#    ip = "2601:602:9804:4396:9523:5bb6:a710:35da"
     if request.headers.getlist("X-Forwarded-For"):
         ip = request.headers.getlist("X-Forwarded-For")[0]
     else:
         ip = request.remote_addr
-    print url+ip
-#    print request.remote_addr
 
     list = []
 
     r = requests.get(url+ip)
     json_string = json.dumps(r.json())
     json_obj = json.loads(json_string)
-    print json_string
+
     if json_obj['status'] == "fail" :
         return [url+ip, url+ip]
+
     forecast = forecastio.load_forecast(api_key, json_obj['lat'], json_obj['lon'])
     current = forecast.currently()
     if "Rain" not in current.summary:
-        list.append("no rain")
-    #	return "no rain"
+        list.append("It's Not Raining " + emoji.emojize(':sunny:'))
     else:
-        list.append("rain")
-    #	return "rain"
+        list.append("It's Raining " + emoji.emojize(':umbrella:'))
 
     list.append(json_obj['city'])
     return list
