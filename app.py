@@ -3,7 +3,7 @@ import os
 import forecastio
 import requests
 import json
-import emoji
+from pyemojify import emojify
 
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 
@@ -25,16 +25,15 @@ def get_weather():
     r = requests.get(url+ip)
     json_string = json.dumps(r.json())
     json_obj = json.loads(json_string)
-
     if json_obj['status'] == "fail" :
-        return [url+ip, emoji.emojize('Something went wrong :thumbs_down_sign:')]
+        return [url+ip, emojify("Something went wrong :bee: :sunny: :umbrella:")]
 
     forecast = forecastio.load_forecast(api_key, json_obj['lat'], json_obj['lon'])
     current = forecast.currently()
     if "Rain" not in current.summary:
-        list.append(emoji.emojize('It\'s Not Raining :sunny:'))
+        list.append(emojify("It's Not Raining :sunny:"))
     else:
-        list.append(emoji.emojize('It\'s Raining :umbrella:'))
+        list.append(emojify("It's Raining :umbrella:"))
 
     list.append(json_obj['city'])
     return list
