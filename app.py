@@ -19,19 +19,29 @@ def get_weather():
     print url+ip
 #    print request.remote_addr
 
+    list = []
+
     r = requests.get(url+ip)
     json_string = json.dumps(r.json())
     json_obj = json.loads(json_string)
+    print json_string
+    if json_obj['status'] == "fail" :
+        return [url+ip, url+ip]
     forecast = forecastio.load_forecast(api_key, json_obj['lat'], json_obj['lon'])
     current = forecast.currently()
     if "Rain" not in current.summary:
-    	return "no rain"
+        list.append("no rain")
+    #	return "no rain"
     else:
-    	return "rain"
+        list.append("rain")
+    #	return "rain"
+
+    list.append(json_obj['city'])
+    return list
 
 @app.route('/')
 def home_page():
-	return render_template('index.html', weather = get_weather())
+	return render_template('index.html', weather = get_weather()[0], city = get_weather()[1])
 
 
 #@app.route('/room/<string:groupKey>')
