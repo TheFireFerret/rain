@@ -20,6 +20,8 @@ def get_weather():
     else:
         ip = request.remote_addr
 
+    ip = "2601:602:9804:4396:8d29:6f17:a182:e8ed"
+
     list = []
 
     r = requests.get(url+ip)
@@ -36,11 +38,17 @@ def get_weather():
         list.append(emojify(":umbrella: It's Raining :umbrella:"))
 
     list.append(json_obj['city'])
+    list.append(forecast.minutely().summary)
+    list.append(forecast.hourly().summary)
+    list.append(forecast.currently().temperature)
+
+
     return list
 
 @app.route('/')
 def home_page():
-	return render_template('index.html', weather = get_weather()[0], city = get_weather()[1])
+    list = get_weather()
+    return render_template('index.html', weather = list[0], city = list[1], current = list[2], day = list[3], temp = list[4])
 
 #@app.route('/room/<string:groupKey>')
 #def group_id_path(groupKey):
