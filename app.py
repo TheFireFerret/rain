@@ -32,9 +32,9 @@ def get_weather():
     forecast = forecastio.load_forecast(api_key, json_obj['lat'], json_obj['lon'])
     current = forecast.currently()
     if "Rain" not in current.summary:
-        list.append(emoji.emojize("It's Not Raining :sunny:"))
+        list.append(emoji.emojize('It\'s Not Raining :sunny:'))
     else:
-        list.append(emoji.emojize("It's Raining :umbrella:"))
+        list.append(emoji.emojize('It\'s Raining :umbrella:'))
 
     list.append(json_obj['city'])
     return list
