@@ -27,14 +27,14 @@ def get_weather():
     json_obj = json.loads(json_string)
 
     if json_obj['status'] == "fail" :
-        return [url+ip, url+ip]
+        return [url+ip, emoji.emojize('Something went wrong :thumbs_down_sign:')]
 
     forecast = forecastio.load_forecast(api_key, json_obj['lat'], json_obj['lon'])
     current = forecast.currently()
     if "Rain" not in current.summary:
-        list.append("It's Not Raining " + emoji.emojize(':sunny:'))
+        list.append(emoji.emojize("It's Not Raining :sunny:"))
     else:
-        list.append("It's Raining " + emoji.emojize(':umbrella:'))
+        list.append(emoji.emojize("It's Raining :umbrella:"))
 
     list.append(json_obj['city'])
     return list
