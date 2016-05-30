@@ -14,8 +14,12 @@ api_key = "8ac8a9f185a7384bdeae01ec9fadee8f"
 
 def get_weather():
     url = "http://ip-api.com/json/"
-    ip = request.remote_addr
+#    ip = request.remote_addr
 #    ip = "2601:602:9804:4396:9523:5bb6:a710:35da"
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
     print url+ip
 #    print request.remote_addr
 
