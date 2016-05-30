@@ -42,7 +42,6 @@ def get_weather():
 def home_page():
 	return render_template('index.html', weather = get_weather()[0], city = get_weather()[1])
 
-
 #@app.route('/room/<string:groupKey>')
 #def group_id_path(groupKey):
 #	return render_template('room.html', groupKey = groupKey)
