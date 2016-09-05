@@ -21,7 +21,7 @@ def get_weather():
         ip = request.remote_addr
 
 
-    ip = "2601:602:9804:4396:8d29:6f17:a182:e8ed"
+    # ip = "2601:602:9804:4396:8d29:6f17:a182:e8ed"
 
     list = []
 
