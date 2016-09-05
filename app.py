@@ -20,6 +20,7 @@ def get_weather():
     else:
         ip = request.remote_addr
 
+
     ip = "2601:602:9804:4396:8d29:6f17:a182:e8ed"
 
     list = []
@@ -49,10 +50,6 @@ def get_weather():
 def home_page():
     list = get_weather()
     return render_template('index.html', weather = list[0], city = list[1], current = list[2], day = list[3], temp = list[4])
-
-#@app.route('/room/<string:groupKey>')
-#def group_id_path(groupKey):
-#	return render_template('room.html', groupKey = groupKey)
 
 if __name__ == '__main__':
 	#app.run()
